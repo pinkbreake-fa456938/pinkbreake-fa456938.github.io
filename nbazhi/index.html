@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>NBA直播吧-在线观看_NBA直播赛程_球队动态与实时比分</title>
+  <meta name="description" content="NBA直播吧提供NBA在线高清直播入口，覆盖每日赛程、实时比分、球队动态与球星表现。页面聚合热门比赛推荐、最新战况、深度数据解析与球迷评论，方便快速找到想看的NBA直播与赛后资讯。">
+  <meta name="keywords" content="NBA直播吧,NBA在线直播,NBA赛程,实时比分,球队动态">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23f97316'/%3E%3Cpath d='M28 50h44M50 22v56M35 32c8 10 8 26 0 36M65 32c-8 10-8 26 0 36' stroke='%230f172a' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #0b1120;
+      --ink-soft: #111827;
+      --panel: #0f172a;
+      --panel-2: #1e293b;
+      --line: #263247;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #f97316;
+      --accent-2: #facc15;
+      --cyan: #22d3ee;
+      --green: #34d399;
+      --danger: #fb7185;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 14px 34px rgba(0,0,0,.34);
+      --font: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background:
+        radial-gradient(900px 420px at 10% 0%, rgba(249,115,22,.16), transparent 60%),
+        radial-gradient(800px 500px at 90% 8%, rgba(34,211,238,.10), transparent 55%),
+        linear-gradient(180deg, #090e18 0%, #0b1120 38%, #0a0f1a 100%);
+      color: var(--text);
+      line-height: 1.65;
+      letter-spacing: .01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 34px 0; }
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .section-head h2 {
+      font-size: clamp(22px, 2.6vw, 30px);
+      line-height: 1.25;
+      letter-spacing: .02em;
+    }
+    .section-head h2 span {
+      display: inline-block;
+      width: 8px; height: 22px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      margin-right: 10px;
+      vertical-align: -2px;
+    }
+    .section-head p { color: var(--muted); font-size: 14px; max-width: 620px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(249,115,22,.14);
+      color: #fdba74;
+      border: 1px solid rgba(249,115,22,.28);
+      white-space: nowrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: .2s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #fb923c);
+      color: #1a0d02;
+      box-shadow: 0 8px 22px rgba(249,115,22,.26);
+    }
+    .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    .btn-ghost {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,.02);
+    }
+    .btn-ghost:hover { border-color: rgba(249,115,22,.55); color: #fdba74; }
+    .card {
+      background: linear-gradient(180deg, rgba(30,41,59,.72), rgba(15,23,42,.92));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: .22s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(249,115,22,.36); }
+
+    /* 导航 */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9,14,24,.84);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(38,50,71,.8);
+    }
+    .nav {
+      display: flex; align-items: center; gap: 22px;
+      height: 66px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; letter-spacing: .04em;
+      font-size: 19px;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #fde047 70%);
+      display: grid; place-items: center;
+      color: #1a0d02; font-size: 18px;
+      box-shadow: 0 6px 16px rgba(249,115,22,.3);
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+      overflow-x: auto; scrollbar-width: none;
+      flex: 1;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: #cbd5e1;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: .18s;
+    }
+    .nav-links a:hover { background: rgba(249,115,22,.14); color: #fdba74; }
+    .nav-actions { display: flex; gap: 10px; }
+
+    /* 首屏 */
+    .hero {
+      position: relative;
+      padding: 46px 0 38px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(115deg, rgba(249,115,22,.18), transparent 42%),
+        radial-gradient(600px 260px at 82% 22%, rgba(250,204,21,.14), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 30px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: clamp(30px, 4.2vw, 50px);
+      line-height: 1.18;
+      letter-spacing: .02em;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent-2);
+      text-shadow: 0 0 22px rgba(250,204,21,.28);
+    }
+    .hero-desc {
+      color: #b6c2d4;
+      font-size: 16px;
+      max-width: 640px;
+      margin-bottom: 22px;
+    }
+    .search-box {
+      display: flex; align-items: center;
+      background: rgba(15,23,42,.9);
+      border: 1px solid #334155;
+      border-radius: 999px;
+      padding: 6px 6px 6px 18px;
+      max-width: 560px;
+      margin-bottom: 20px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    .search-box input {
+      flex: 1; min-width: 0;
+      background: transparent; border: none; outline: none;
+      color: var(--text); font-size: 14px;
+      padding: 8px 4px;
+    }
+    .search-box input::placeholder { color: #64748b; }
+    .quick-links {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .quick-links a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid #2b3a52;
+      background: rgba(30,41,59,.56);
+      font-size: 13px;
+      color: #dbe5f2;
+      transition: .18s;
+    }
+    .quick-links a:hover { border-color: var(--accent); color: #fdba74; transform: translateY(-1px); }
+    .hero-side {
+      display: grid; gap: 12px;
+    }
+    .side-card {
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid #2b3a52;
+      background: linear-gradient(150deg, rgba(30,41,59,.85), rgba(15,23,42,.92));
+    }
+    .side-card h3 { font-size: 14px; color: #e2e8f0; margin-bottom: 6px; }
+    .side-card p { font-size: 12px; color: var(--muted); }
+    .live-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--danger); margin-right: 6px;
+      box-shadow: 0 0 0 4px rgba(251,113,133,.16);
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse { 50% { opacity: .45; } }
+
+    /* 内容简介 */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.6fr .9fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .intro-text {
+      background: rgba(15,23,42,.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 26px;
+    }
+    .intro-text p { color: #b9c5d6; font-size: 15px; margin-bottom: 14px; }
+    .intro-text p:last-child { margin-bottom: 0; }
+    .stat-panel {
+      display: grid; gap: 12px;
+    }
+    .stat-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(30,41,59,.62);
+      border: 1px solid #2b3a52;
+      font-size: 13px;
+    }
+    .stat-item strong { font-size: 18px; color: var(--accent-2); }
+
+    /* 推荐卡片 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+    .match-card { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+    .match-top { display: flex; justify-content: space-between; gap: 10px; }
+    .match-title { font-size: 16px; font-weight: 700; line-height: 1.4; }
+    .match-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .match-tags span {
+      font-size: 11px; padding: 3px 8px; border-radius: 999px;
+      background: rgba(34,211,238,.10); color: #67e8f9; border: 1px solid rgba(34,211,238,.20);
+    }
+    .match-desc { font-size: 13px; color: #9fb0c6; }
+    .match-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: var(--muted);
+      border-top: 1px dashed #2b3a52; padding-top: 10px;
+    }
+    .score { color: var(--accent-2); font-weight: 700; font-size: 15px; }
+
+    /* 最新更新 */
+    .update-list { display: grid; gap: 12px; }
+    .update-item {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 16px; align-items: center;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: rgba(15,23,42,.68);
+      border: 1px solid #253247;
+      transition: .18s;
+    }
+    .update-item:hover { border-color: rgba(249,115,22,.4); transform: translateX(4px); }
+    .update-time { font-size: 12px; color: var(--muted); }
+    .update-name { font-size: 14px; font-weight: 600; }
+    .update-summary { font-size: 12px; color: #93a3b8; }
+    .update-status {
+      font-size: 11px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(52,211,153,.12); color: #6ee7b7; border: 1px solid rgba(52,211,153,.24);
+    }
+
+    /* 分类 */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+    }
+    .cat-item {
+      padding: 16px;
+      border-radius: 12px;
+      background: rgba(30,41,59,.58);
+      border: 1px solid #2b3a52;
+      font-size: 14px;
+      display: flex; align-items: center; gap: 10px;
+      transition: .18s;
+    }
+    .cat-item:hover { background: rgba(249,115,22,.12); border-color: rgba(249,115,22,.4); }
+    .cat-item i {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); display: inline-block;
+    }
+
+    /* 深度正文 */
+    .deep-article {
+      background: rgba(15,23,42,.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+    }
+    .deep-article h3 { font-size: 19px; margin: 22px 0 10px; color: #f8fafc; }
+    .deep-article h3:first-child { margin-top: 0; }
+    .deep-article p { color: #b9c5d6; font-size: 15px; margin-bottom: 14px; }
+    .deep-article .highlight {
+      border-left: 3px solid var(--accent);
+      padding: 10px 16px;
+      background: rgba(249,115,22,.08);
+      border-radius: 0 10px 10px 0;
+      color: #e9d5b8;
+      font-size: 14px;
+      margin: 18px 0;
+    }
+
+    /* 体验指南 */
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+    .guide-card {
+      padding: 20px;
+      border-radius: 14px;
+      background: rgba(30,41,59,.56);
+      border: 1px solid #2b3a52;
+    }
+    .guide-card h4 { font-size: 15px; margin-bottom: 8px; color: #fde68a; }
+    .guide-card p { font-size: 13px; color: #9fb0c6; }
+
+    /* FAQ */
+    .faq-grid { display: grid; gap: 12px; }
+    .faq-item {
+      border-radius: 12px;
+      border: 1px solid #2b3a52;
+      background: rgba(15,23,42,.62);
+      overflow: hidden;
+    }
+    .faq-q {
+      padding: 16px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex; justify-content: space-between; gap: 14px;
+      cursor: pointer;
+      color: #f1f5f9;
+    }
+    .faq-q span { color: var(--accent); font-size: 20px; line-height: 1; }
+    .faq-a {
+      padding: 0 18px 16px;
+      color: #aebcd0;
+      font-size: 14px;
+      display: none;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* 评论 */
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+    .comment {
+      padding: 16px;
+      border-radius: 12px;
+      background: rgba(30,41,59,.52);
+      border: 1px solid #27364d;
+    }
+    .comment-top { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .comment-user { font-size: 13px; font-weight: 600; color: #fcd34d; }
+    .comment-time { font-size: 11px; color: #64748b; }
+    .comment-text { font-size: 13px; color: #b3c0d2; }
+
+    /* 资讯 */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+    .news-card {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(15,23,42,.66);
+      border: 1px solid #2b3a52;
+      transition: .2s;
+    }
+    .news-card:hover { border-color: rgba(34,211,238,.4); transform: translateY(-3px); }
+    .news-date { font-size: 11px; color: var(--cyan); margin-bottom: 6px; }
+    .news-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; line-height: 1.45; }
+    .news-summary { font-size: 12px; color: #94a3b8; }
+
+    /* 页脚 */
+    .footer {
+      margin-top: 20px;
+      border-top: 1px solid #1e293b;
+      padding: 34px 0 28px;
+      background: rgba(7,11,19,.7);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 26px;
+    }
+    .footer h4 { font-size: 14px; margin-bottom: 10px; color: #e2e8f0; }
+    .footer p, .footer a { font-size: 12px; color: #7c8ba1; line-height: 1.9; }
+    .footer a:hover { color: #fdba74; }
+    .footer-bottom {
+      margin-top: 24px; padding-top: 16px;
+      border-top: 1px solid #1e293b;
+      display: flex; justify-content: space-between; gap: 16px;
+      flex-wrap: wrap;
+      font-size: 12px; color: #64748b;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .intro-grid { grid-template-columns: 1fr; }
+      .card-grid, .guide-grid, .news-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .cat-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 14px; }
+      .nav { gap: 12px; height: 58px; }
+      .brand { font-size: 16px; }
+      .nav-actions .btn-ghost { display: none; }
+      .hero { padding: 30px 0 24px; }
+      .hero h1 { font-size: 28px; }
+      .card-grid, .guide-grid, .news-grid, .comment-grid { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .update-item { grid-template-columns: 1fr; gap: 6px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .deep-article { padding: 20px 16px; }
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="/">
+        <span class="brand-mark">🏀</span>
+        <span>NBA直播吧</span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="/#hero">首页</a>
+        <a href="/#match-hot">热门直播</a>
+        <a href="/#latest-update">最新赛况</a>
+        <a href="/#category">赛事分类</a>
+        <a href="/#deep-analysis">深度解析</a>
+        <a href="/#faq">常见问题</a>
+        <a href="/#comments">球迷评论</a>
+        <a href="/#news">赛事资讯</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="/#latest-update">今日赛程</a>
+        <a class="btn btn-primary" href="/#match-hot">观看直播</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 首屏 Banner -->
+    <section class="hero" id="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="badge"><span class="live-dot"></span> 2026年11月7日 · 今日比赛进行中</span>
+          <h1 style="margin-top:14px;">NBA直播吧 <em>在线高清直播</em> · 赛程比分一站看</h1>
+          <p class="hero-desc">
+            聚合每日NBA直播入口、实时比分与球队动态，覆盖常规赛、季中锦标赛和季后赛焦点战。无论你是追球星、看战术还是查数据，都能在NBA直播吧快速找到想看的内容。
+          </p>
+          <div class="search-box">
+            <input type="text" placeholder="搜索球队、球员或比赛日期，如：湖人 vs 勇士" aria-label="搜索NBA直播内容">
+            <a class="btn btn-primary" href="/#match-hot">搜索</a>
+          </div>
+          <div class="quick-links">
+            <a href="/#match-hot">今日直播</a>
+            <a href="/#latest-update">实时战报</a>
+            <a href="/#category">东西部排名</a>
+            <a href="/#deep-analysis">球星数据</a>
+            <a href="/#faq">观看指南</a>
+            <a href="/#news">转会动态</a>
+            <a href="/#comments">球迷热议</a>
+            <a href="/#guide">观赛体验</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="side-card">
+            <h3><span class="live-dot"></span>正在直播</h3>
+            <p>凯尔特人 vs 雄鹿 · 第三节 08:24</p>
+            <p style="color:var(--accent-2);font-weight:700;margin-top:4px;">86 : 79</p>
+          </div>
+          <div class="side-card">
+            <h3>今日焦点战</h3>
+            <p>湖人 vs 勇士 · 11:00 开球</p>
+            <p>太阳 vs 掘金 · 11:30 开球</p>
+          </div>
+          <div class="side-card">
+            <h3>热门关键词</h3>
+            <p>NBA直播吧 · 在线观看 · 实时比分 · 赛程表</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 内容简介 -->
+    <section class="section" id="intro">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>NBA直播吧内容简介</h2>
+          <p>为球迷提供从赛前前瞻到赛后复盘的一站式内容导航。</p>
+        </div>
+        <div class="intro-grid">
+          <div class="intro-text">
+            <p>NBA直播吧的核心价值在于把分散的赛事信息重新整理成清晰的观看路径。很多球迷打开搜索框时并不只想找一个直播链接，而是希望同时确认比赛时间、对阵双方近期状态、球星是否出战，以及赛后的技术统计。NBA直播吧围绕这些真实需求，将直播入口、赛程提醒、比分速递和球队动态整合在同一个页面里，减少反复跳转的麻烦。</p>
+            <p>这个页面适合几类受众：每天追比赛的深度球迷、只看焦点战和季后赛的轻度观众、关注球员数据和 fantasy 玩法的数据党，以及想了解战术打法和球队轮换的分析型球迷。无论你习惯用手机碎片时间刷比分，还是坐在电脑前完整看一场直播，NBA直播吧都尽量让信息层级保持清楚，重要内容靠前，次要内容不抢注意力。</p>
+            <p>页面中的推荐卡片、更新列表和 FAQ 都围绕“NBA直播吧”这个核心需求展开，既包含可快速扫读的比分和状态，也保留了编辑视角的深度解析。你可以把它当作一个长期收藏的观赛入口，也可以当作搜索具体比赛时的信息中转站。后续我们还会持续补充球队专题、球星档案和经典比赛回看，让内容库更有沉淀感。</p>
+          </div>
+          <div class="stat-panel">
+            <div class="stat-item"><span>今日直播场次</span><strong>9</strong></div>
+            <div class="stat-item"><span>进行中比赛</span><strong>3</strong></div>
+            <div class="stat-item"><span>已结束战报</span><strong>6</strong></div>
+            <div class="stat-item"><span>收录球队专题</span><strong>30</strong></div>
+            <div class="stat-item"><span>近7日热门球员</span><strong>48</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 热门内容推荐 -->
+    <section class="section" id="match-hot">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>热门直播推荐</h2>
+          <p>按关注度与实时热度整理，点击卡片可查看赛前情报与直播入口。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card match-card">
+            <div class="match-top">
+              <div class="match-title">凯尔特人 vs 雄鹿</div>
+              <span class="badge">直播中</span>
+            </div>
+            <div class="match-tags"><span>东部焦点</span><span>强强对话</span><span>防守大战</span></div>
+            <p class="match-desc">两队近期状态都在回升，锋线对位和转换进攻是最大看点，第三节的轮换深度可能直接决定比赛走向。</p>
+            <div class="match-meta"><span>第三节 08:24</span><span class="score">86 : 79</span></div>
+          </article>
+          <article class="card match-card">
+            <div class="match-top">
+              <div class="match-title">湖人 vs 勇士</div>
+              <span class="badge">今日焦点</span>
+            </div>
+            <div class="match-tags"><span>流量大战</span><span>球星对决</span><span>三分对轰</span></div>
+            <p class="match-desc">经典对决再次上演，外线手感和禁区保护是两条主线，比赛节奏很可能在前两节就被拉高。</p>
+            <div class="match-meta"><span>11:00 开球</span><span class="score">未开始</span></div>
+          </article>
+          <article class="card match-card">
+            <div class="match-top">
+              <div class="match-title">太阳 vs 掘金</div>
+              <span class="badge">西部强档</span>
+            </div>
+            <div class="match-tags"><span>内线对抗</span><span>中距离</span><span>战术执行</span></div>
+            <p class="match-desc">掘金的半场阵地效率依旧稳定，太阳需要用更快的转换和更积极的无球跑动来破解对手的收缩防守。</p>
+            <div class="match-meta"><span>11:30 开球</span><span class="score">未开始</span></div>
+          </article>
+          <article class="card match-card">
+            <div class="match-top">
+              <div class="match-title">独行侠 vs 雷霆</div>
+              <span class="badge">新星碰撞</span>
+            </div>
+            <div class="match-tags"><span>青年军</span><span>持球大核</span><span>快攻反击</span></div>
+            <p class="match-desc">年轻球队之间的速度对决，雷霆的协防轮转和独行侠的单点爆破能力形成鲜明对比，末节关键球值得关注。</p>
+            <div class="match-meta"><span>昨日结束</span><span class="score">112 : 108</span></div>
+          </article>
+          <article class="card match-card">
+            <div class="match-top">
+              <div class="match-title">热火 vs 76人</div>
+              <span class="badge">东部卡位</span>
+            </div>
+            <div class="match-tags"><span>季后赛席位</span><span>防守韧性</span><span>篮板争夺</span></div>
+            <p class="match-desc">一场典型的东部肉搏战，比分未必高，但每个回合的防守沟通和二次进攻都可能改变排名格局。</p>
+            <div class="match-meta"><span>明日 08:30</span><span class="score">待开赛</span></div>
+          </article>
+          <article class="card match-card">
+            <div class="match-top">
+              <div class="match-title">快船 vs 鹈鹕</div>
+              <span class="badge">锋线对话</span>
+            </div>
+            <div class="match-tags"><span>侧翼群</span><span>对位优势</span><span>节奏控制</span></div>
+            <p class="match-desc">两队都拥有大量锋线资源，谁能先在转换中建立优势，谁就能把比赛拖入自己更舒服的半场节奏。</p>
+            <div class="match-meta"><span>明日 09:00</span><span class="score">待开赛</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最新更新 -->
+    <section class="section" id="latest-update">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>最新赛况与更新</h2>
+          <p>2026年11月7日实时整理，包含比分变化、伤停消息与直播提醒。</p>
+        </div>
+        <div class="update-list">
+          <div class="update-item">
+            <div class="update-time">11月7日 10:42</div>
+            <div><div class="update-name">凯尔特人 vs 雄鹿 第三节战报</div><div class="update-summary">主队打出一波 9-2 小高潮，外线连续命中，雄鹿请求暂停调整防守策略。</div></div>
+            <span class="update-status">直播中</span>
+          </div>
+          <div class="update-item">
+            <div class="update-time">11月7日 10:18</div>
+            <div><div class="update-name">湖人赛前伤病名单更新</div><div class="update-summary">一名主要轮换球员升级为出战成疑，教练组将在赛前热身后决定最终名单。</div></div>
+            <span class="update-status">赛前</span>
+          </div>
+          <div class="update-item">
+            <div class="update-time">11月7日 09:55</div>
+            <div><div class="update-name">勇士首发阵容微调</div><div class="update-summary">球队计划增加一名侧翼射手进入首发，以拉开空间应对湖人的收缩防守。</div></div>
+            <span class="update-status">阵容</span>
+          </div>
+          <div class="update-item">
+            <div class="update-time">11月7日 09:20</div>
+            <div><div class="update-name">独行侠 vs 雷霆 赛后数据</div><div class="update-summary">独行侠末节关键球 6 投 4 中，雷霆篮板落后 9 个，二次进攻得分成为分水岭。</div></div>
+            <span class="update-status">已结束</span>
+          </div>
+          <div class="update-item">
+            <div class="update-time">11月7日 08:40</div>
+            <div><div class="update-name">今日直播入口汇总</div><div class="update-summary">NBA直播吧已更新全部 9 场比赛的入口与开球时间，焦点战建议提前 10 分钟进入。</div></div>
+            <span class="update-status">汇总</span>
+          </div>
+          <div class="update-item">
+            <div class="update-time">11月6日 22:30</div>
+            <div><div class="update-name">东西部排名小幅变动</div><div class="update-summary">昨日比赛结束后，东部第 4 到第 7 名之间胜场差缩小到 1.5 场，卡位战更加激烈。</div></div>
+            <span class="update-status">排名</span>
+          </div>
+          <div class="update-item">
+            <div class="update-time">11月6日 20:15</div>
+            <div><div class="update-name">某明星球员恢复训练</div><div class="update-summary">球队官方表示恢复进展良好，但复出时间仍需根据对抗训练后的身体反应评估。</div></div>
+            <span class="update-status">伤病</span>
+          </div>
+          <div class="update-item">
+            <div class="update-time">11月6日 18:00</div>
+            <div><div class="update-name">季中锦标赛分组形势分析</div><div class="update-summary">小组赛进入关键阶段，净胜分可能成为出线的重要变量，多场比赛需要关注分差。</div></div>
+            <span class="update-status">专题</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分类入口 -->
+    <section class="section" id="category">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>赛事分类入口</h2>
+          <p>按内容类型快速定位，减少在信息流里反复翻找。</p>
+        </div>
+        <div class="cat-grid">
+          <a class="cat-item" href="/#match-hot"><i></i>今日直播</a>
+          <a class="cat-item" href="/#latest-update"><i></i>实时比分</a>
+          <a class="cat-item" href="/#deep-analysis"><i></i>深度解析</a>
+          <a class="cat-item" href="/#guide"><i></i>观赛指南</a>
+          <a class="cat-item" href="/#faq"><i></i>常见问题</a>
+          <a class="cat-item" href="/#comments"><i></i>球迷评论</a>
+          <a class="cat-item" href="/#news"><i></i>赛事资讯</a>
+          <a class="cat-item" href="/#intro"><i></i>内容简介</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 深度解析正文 -->
+    <section class="section" id="deep-analysis">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>深度解析：NBA直播吧为什么值得反复使用</h2>
+          <p>从观看习惯、内容组织和信息价值三个角度拆解这个页面的实际用途。</p>
+        </div>
+        <article class="deep-article">
+          <h3>一场比赛的信息需求，远不止一个直播链接</h3>
+          <p>很多球迷搜索“NBA直播吧”时，表面上是在找一个能看球的入口，实际需求往往更复杂。比赛有没有开始、在哪个平台可以看、两队最近五次交手谁占优、核心球员是否轮休、末节有没有回放，这些问题通常分散在不同页面里。NBA直播吧把这些高频问题整理到同一套结构下，让用户先看到最关键的结论，再决定是否深入。</p>
+          <p>从内容消费的角度看，NBA直播吧更适合“边看边查”的使用场景。手机端用户可能只想知道第三节还剩多少时间、当前分差和下一场焦点战的开球时间，因此页面的更新列表和比分卡片被放在靠前位置；电脑端用户则更愿意阅读战术解析和球队动态，深度解析模块因此提供了更完整的编辑视角。两种浏览路径并存，不会让任何一类用户觉得页面太浅或太重。</p>
+          <h3>题材与内容吸引点：比赛本身的不可预测性</h3>
+          <p>NBA的吸引力很大程度上来自比赛进程的不可预测。领先十几分并不保险，角色球员的突然爆发、教练的临场调整、最后两分钟的犯规战术，都可能改写结果。NBA直播吧在推荐卡片里保留了“看点”描述，而不是只给一个队名和对阵时间，目的就是帮助用户快速判断这场比赛是否值得点进去。比如防守大战和三分对轰的观赛体验完全不同，提前知道风格，选择会更高效。</p>
+          <p>另一个吸引点是球星叙事。球迷会为了看某位球员的复出、里程碑或者对位恩怨而打开直播。页面中的标签和摘要会自然带出这些线索，但不会过度渲染，保持信息密度和可读性的平衡。对于刚入门的观众，这些标签也能起到“快速了解背景”的作用。</p>
+          <div class="highlight">编辑视角：如果你只想看一场比赛，优先关注“今日焦点”和“正在直播”卡片；如果你想了解排名形势，先看更新列表里的卡位战和胜负差，再回到深度解析补背景。</div>
+          <h3>人物与球队分析：从对位看比赛走向</h3>
+          <p>NBA直播吧的内容组织里，球队和球员分析占据重要位置。东部球队更强调身体对抗和防守轮转，西部球队则经常用空间和节奏制造错位。页面中的对阵卡片会提示“锋线对话”“内线对抗”“青年军”等方向，让用户在看球前就有一个观察框架。比如锋线资源丰富的球队，往往会通过换防和协防来限制对手的持球核心；而后卫线速度快的球队，则更愿意提速打转换。</p>
+          <p>球星方面，持球大核和团队型球队的观感差异明显。前者依赖单点爆破和关键球，后者依赖传导和空切。NBA直播吧的深度解析不会给出夸张结论，而是尽量描述比赛的可能走向和观察点，帮助读者在看直播时更有代入感。</p>
+          <h3>视听与节奏：直播体验的关键变量</h3>
+          <p>对直播内容来说，画面流畅度和解说风格直接影响留存。NBA直播吧在页面中提示“提前进入”“关注开球时间”等细节，是为了减少用户错过开场的挫败感。比赛节奏方面，快节奏球队的比赛往往更适合碎片化观看，慢节奏的阵地战则需要更完整的时段。页面用标签和摘要做区分，让用户可以根据自己的时间安排选择内容。</p>
+          <p>此外，数据面板和赛况更新也能提升观看体验。比分变化、暂停节点和关键球统计，能让无法全程观看的用户快速补上比赛脉络。NBA直播吧把这些信息放在易扫读的位置，而不是埋在长段落里，符合真实的使用习惯。</p>
+          <h3>适合人群与同类内容比较</h3>
+          <p>NBA直播吧适合三类人：第一类是每天固定看球的深度球迷，他们需要稳定的入口和更新节奏；第二类是只看焦点战的轻度用户，他们更在意推荐是否准确、时间是否清楚；第三类是需要数据和背景的资料型用户，他们希望页面能提供足够的上下文。相比单一的视频站，NBA直播吧更强调信息组织和导航效率；相比纯文字资讯站，它又保留了直播入口和实时比分，使用场景更完整。</p>
+          <p>如果你在搜索这个词时还拿不准该看哪场，建议先浏览热门推荐和最新更新，再根据球队风格和开球时间做决定。NBA直播吧的价值不在于堆砌所有比赛，而在于帮你快速缩小选择范围，并给出足够的判断依据。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 体验指南 -->
+    <section class="section" id="guide">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>观赛体验指南</h2>
+          <p>从页面结构到使用习惯，帮助你把NBA直播吧用得顺手。</p>
+        </div>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <h4>页面结构清晰</h4>
+            <p>首屏先给直播状态和搜索入口，中部按热门、更新、分类展开，后部补充深度内容和问答。不需要记住复杂路径，滚动即可完成大部分信息获取。</p>
+          </div>
+          <div class="guide-card">
+            <h4>分类筛选方便</h4>
+            <p>直播中、今日焦点、明日赛程、赛后战报通过标签和更新列表区分，移动端也能快速定位，减少无效点击。</p>
+          </div>
+          <div class="guide-card">
+            <h4>移动端友好</h4>
+            <p>卡片在小屏幕上自动变为单列，文字大小和触控区域经过调整，适合通勤或碎片时间浏览比分和赛况。</p>
+          </div>
+          <div class="guide-card">
+            <h4>适合追更与收藏</h4>
+            <p>更新列表按时间倒序排列，焦点战和伤停消息会持续补充。把页面加入书签，比反复搜索更省时间。</p>
+          </div>
+          <div class="guide-card">
+            <h4>相关推荐扩展路径</h4>
+            <p>热门推荐和资讯模块会带出球队动态、数据分析和观看提示，方便从一个入口延伸到更多相关内容。</p>
+          </div>
+          <div class="guide-card">
+            <h4>信息阅读节奏</h4>
+            <p>比分和状态放在最容易被扫到的位置，深度分析放在后半段，既不打断快速浏览，也为想细看的用户保留空间。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>常见问题</h2>
+          <p>围绕NBA直播吧的观看、选择和更新整理的高频疑问。</p>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <div class="faq-q" role="button" tabindex="0">NBA直播吧适合只看焦点战的球迷吗？<span>+</span></div>
+            <div class="faq-a">适合。页面把“今日焦点”和“正在直播”放在首屏和热门推荐靠前位置，并用标签标明比赛看点。只看焦点战的球迷可以优先浏览这两块，再决定是否进入详细内容，不需要在大量比赛中逐条筛选。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" role="button" tabindex="0">如何快速找到某支球队的直播和赛程？<span>+</span></div>
+            <div class="faq-a">可以先使用首屏搜索框输入球队名称，或查看热门推荐卡片中的对阵信息。更新列表会按时间整理当日比赛，分类入口也能帮助定位到赛况和资讯。如果页面已经更新了该球队的专题，通常会在推荐或资讯模块中出现关联入口。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" role="button" tabindex="0">比赛开始前多久查看NBA直播吧比较合适？<span>+</span></div>
+            <div class="faq-a">建议提前10到15分钟查看，尤其是焦点战。赛前通常会有首发调整、伤病名单和直播入口更新，提前进入能减少错过开场的概率。如果只看比分，比赛开始后随时查看更新列表即可。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" role="button" tabindex="0">深度解析和实时比分哪个更值得先看？<span>+</span></div>
+            <div class="faq-a">取决于你的需求。想快速了解当前比赛走向，先看实时比分和更新列表；想理解战术、对位和球队状态，再读深度解析。两者是互补关系，先扫比分建立印象，再读分析补充背景，通常效率更高。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" role="button" tabindex="0">页面中的推荐内容会覆盖所有比赛吗？<span>+</span></div>
+            <div class="faq-a">推荐内容优先展示关注度高、对阵有看点或正处于关键节点的比赛，不会机械罗列全部场次。如果你关注小众对阵，可以通过搜索框和更新列表查找，分类入口也能帮助定位。页面目标是提高选择效率，而不是制造信息过载。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" role="button" tabindex="0">NBA直播吧的内容更新频率如何？<span>+</span></div>
+            <div class="faq-a">比赛日会围绕比分、首发、伤停和直播入口持续更新，焦点战前后信息密度更高。非比赛日则以球队动态、排名分析和专题内容为主。页面中的更新列表是主要观察窗口，建议比赛日多次刷新查看最新状态。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 用户评论 -->
+    <section class="section" id="comments">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>球迷评论</h2>
+          <p>来自近期浏览用户的真实感讨论，包含推荐、吐槽和期待。</p>
+        </div>
+        <div class="comment-grid">
+          <div class="comment"><div class="comment-top"><span class="comment-user">北看台老陈</span><span class="comment-time">11月7日 10:45</span></div><p class="comment-text">今天凯尔特人和雄鹿这场防守强度真高，第三节那波小高潮看得挺过瘾，NBA直播吧的比分更新还算及时。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">三分线外</span><span class="comment-time">11月7日 10:22</span></div><p class="comment-text">湖人勇士这场还没开始就已经有点期待了，页面把开球时间放得很显眼，不用再切出去查。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">数据流阿哲</span><span class="comment-time">11月7日 09:58</span></div><p class="comment-text">希望能多补一点赛后高阶数据，现在战报比较简洁，不过作为入口页已经够用了。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">矿工小李</span><span class="comment-time">11月7日 09:31</span></div><p class="comment-text">掘金太阳这场中距离对决应该会很好看，页面推荐的看点描述挺准的。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">雷霆青年军</span><span class="comment-time">11月6日 23:12</span></div><p class="comment-text">昨天独行侠打雷霆末节太刺激了，关键球处理还是老练，年轻球队交学费了。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">东海小卡</span><span class="comment-time">11月6日 22:40</span></div><p class="comment-text">分类入口挺方便的，我一般先看东部卡位战，再看西部，页面结构比想象中清楚。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">看球不熬夜</span><span class="comment-time">11月6日 21:05</span></div><p class="comment-text">作为轻度球迷，我就想要一个地方能快速看到今天有哪些焦点比赛，NBA直播吧基本满足这个需求。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">圆脸登迷</span><span class="comment-time">11月6日 20:18</span></div><p class="comment-text">伤病消息更新再快一点就好了，有时候赛前名单变化比比赛本身还关键。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">热火文化</span><span class="comment-time">11月6日 18:52</span></div><p class="comment-text">热火76人这种比赛比分不高但每个回合都很有内容，推荐卡片要是能标注防守效率就更好了。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">金州风筝</span><span class="comment-time">11月6日 17:33</span></div><p class="comment-text">勇士首发调整的消息看到了，拉开空间这个思路没问题，就看临场手感了。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">篮板痴汉</span><span class="comment-time">11月6日 16:07</span></div><p class="comment-text">深度解析写得比较克制，没有硬吹，适合我这种喜欢自己看比赛判断的人。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">新奥尔良烤翅</span><span class="comment-time">11月6日 15:20</span></div><p class="comment-text">快船鹈鹕的锋线对话值得关注，页面标签给得挺直接，一看就知道看点在哪。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">波士顿花园</span><span class="comment-time">11月6日 14:11</span></div><p class="comment-text">希望增加经典比赛回看入口，有时候错过直播想补录像，搜索起来不太方便。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">费城之子</span><span class="comment-time">11月6日 12:46</span></div><p class="comment-text">东部今年太卷了，第4到第7就差一点，NBA直播吧的排名更新要是能再细一点就好了。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">约老师粉丝</span><span class="comment-time">11月6日 11:29</span></div><p class="comment-text">掘金半场阵地确实稳，就看太阳能不能把节奏带起来，页面分析说得在理。</p></div>
+          <div class="comment"><div class="comment-top"><span class="comment-user">达拉斯夜猫</span><span class="comment-time">11月6日 10:03</span></div><p class="comment-text">昨天独行侠赢在关键球，雷霆篮板丢太多了，这种细节如果能写进战报就更完整。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 相关资讯 -->
+    <section class="section" id="news">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><span></span>相关赛事资讯</h2>
+          <p>围绕NBA直播、球队动态与观赛选择的近期内容。</p>
+        </div>
+        <div class="news-grid">
+          <article class="news-card">
+            <div class="news-date">2026年11月7日</div>
+            <h3 class="news-title">今日NBA直播吧焦点战观看提示：三场比赛值得优先关注</h3>
+            <p class="news-summary">从东部强强对话到西部内线对抗，整理开球时间、核心对位和直播入口，帮助球迷合理安排观看顺序。</p>
+          </article>
+          <article class="news-card">
+            <div class="news-date">2026年11月7日</div>
+            <h3 class="news-title">湖人勇士赛前名单观察：轮换可能发生变化</h3>
+            <p class="news-summary">赛前伤病名单仍有变数，教练组计划通过热身情况决定最终轮换，外线投射和防守对位是主要考量。</p>
+          </article>
+          <article class="news-card">
+            <div class="news-date">2026年11月6日</div>
+            <h3 class="news-title">独行侠雷霆赛后复盘：末节关键球与篮板差距</h3>
+            <p class="news-summary">比赛分水岭出现在最后六分钟，独行侠关键球效率更高，雷霆在防守篮板保护上付出代价。</p>
+          </article>
+          <article class="news-card">
+            <div class="news-date">2026年11月6日</div>
+            <h3 class="news-title">东部排名卡位战升温，多队胜场差缩小</h3>
+            <p class="news-summary">随着近期比赛结果变化，东部第4到第7名之间竞争更加激烈，未来一周的赛程可能直接影响排位。</p>
+          </article>
+          <article class="news-card">
+            <div class="news-date">2026年11月5日</div>
+            <h3 class="news-title">季中锦标赛分组形势：净胜分可能成为关键变量</h3>
+            <p class="news-summary">小组赛进入中段，多支球队需要关注分差和相互战绩，NBA直播吧整理了重点场次与观看建议。</p>
+          </article>
+          <article class="news-card">
+            <div class="news-date">2026年11月5日</div>
+            <h3 class="news-title">球星恢复训练进展更新，复出时间仍待评估</h3>
+            <p class="news-summary">球队表示恢复情况良好，但对抗训练后的身体反应仍是决定复出时间的关键，球迷需关注赛前名单。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h4>NBA直播吧</h4>
+          <p>聚合NBA在线直播入口、实时比分、赛程提醒与球队动态，为球迷提供清晰高效的观赛导航。页面内容会随比赛进程持续更新，建议收藏后随时查看。</p>
+        </div>
+        <div>
+          <h4>快速导航</h4>
+          <p><a href="/#hero">首页</a> · <a href="/#match-hot">热门直播</a> · <a href="/#latest-update">最新赛况</a> · <a href="/#category">分类入口</a> · <a href="/#deep-analysis">深度解析</a></p>
+        </div>
+        <div>
+          <h4>友情链接</h4>
+          <p><a href="/#news">赛事资讯</a> · <a href="/#faq">常见问题</a> · <a href="/#comments">球迷评论</a> · <a href="/#guide">观赛指南</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 NBA直播吧 · 内容仅供观赛参考与信息导航</span>
+        <span>免责声明：页面信息整理自公开赛程与动态，直播版权归相关平台所有。</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.faq-item');
+      for (var i = 0; i < items.length; i++) {
+        (function (item) {
+          var q = item.querySelector('.faq-q');
+          if (!q) return;
+          q.addEventListener('click', function () {
+            var isOpen = item.classList.contains('open');
+            for (var j = 0; j < items.length; j++) {
+              items[j].classList.remove('open');
+            }
+            if (!isOpen) item.classList.add('open');
+          });
+        })(items[i]);
+      }
+    })();
+  </script>
+</body>
+        </html>
